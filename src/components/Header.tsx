@@ -30,9 +30,12 @@ export default async function Header() {
             />
           </div>
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
+            <Link
+              href={"/"}
+              className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900"
+            >
               বাজার দর
-            </h1>
+            </Link>
             <p className="text-[11px] sm:text-xs text-gray-500">{date}</p>
           </div>
         </div>

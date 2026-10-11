@@ -29,7 +29,7 @@ const Navlinks = async () => {
         <div className="flex items-center gap-6 overflow-x-auto whitespace-nowrap scrollbar-none py-3 text-sm font-medium text-gray-800">
           {navs.map((n) => (
             <Link
-              key={n.id || n.slug}
+              key={n.id}
               href={`/category/${n.slug}`}
               className="flex items-center gap-1.5 hover:text-[#008236] transition-colors shrink-0"
             >

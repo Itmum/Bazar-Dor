@@ -24,7 +24,11 @@ export default function TodayIncreasedProducts({ products }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {increasedItems.map((product) => (
-          <Link href={"/"} key={product.id} className="h-full block">
+          <Link
+            href={`/product/${product.id}`}
+            key={product.id}
+            className="h-full block"
+          >
             <ProductCard product={product} />
           </Link>
         ))}
