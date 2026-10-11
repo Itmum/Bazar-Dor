@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navlinks from "./Navlinks";
 import Marquee from "./Marquee";
+import UserInfo from "./UserInfo";
 
 async function getCachedDate() {
   "use cache";
@@ -41,20 +42,7 @@ export default async function Header() {
         </div>
 
         {/* Right Side: Auth Buttons */}
-        <div className="flex items-center gap-4">
-          <Link
-            href="/signin"
-            className="text-sm font-medium text-gray-700 hover:text-gray-900"
-          >
-            সাইন ইন
-          </Link>
-          <Link
-            href="/signup"
-            className="rounded-lg bg-[#008236] px-4 py-2 text-sm font-medium text-white shadow hover:bg-[#006d2d] transition-colors"
-          >
-            সাইন আপ
-          </Link>
-        </div>
+        <UserInfo></UserInfo>
       </div>
 
       {/* Navigation Links */}
