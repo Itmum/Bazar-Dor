@@ -1,4 +1,5 @@
 import CategorySortView from "@/components/CategorySortView";
+import { notFound } from "next/navigation";
 
 interface CategoryContentProps {
   params: Promise<{ categoryId: string }>;
@@ -22,6 +23,9 @@ export default async function CategoryContent({
 }: CategoryContentProps) {
   const { categoryId } = await params;
   const products = await getCategoryProducts(categoryId);
+  if (!products || products.length === 0) {
+    notFound();
+  }
 
   return <CategorySortView products={products} categoryId={categoryId} />;
 }
