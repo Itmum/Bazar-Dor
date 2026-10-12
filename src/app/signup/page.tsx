@@ -34,32 +34,32 @@ export default function SignUpPage() {
   };
 
   const handleGoogleSignIn = async () => {
-    const data = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "google",
     });
-    console.log(data);
-    if (data) {
-      toast.success("সাইন আপ সফল হয়েছে! মূলপাতায় নিয়ে যাওয়া হচ্ছে...");
-      console.log(data);
-      redirect("/");
-    }
+    // console.log(data);
+    // if (data) {
+    //   toast.success("সাইন আপ সফল হয়েছে! মূলপাতায় নিয়ে যাওয়া হচ্ছে...");
+    //   console.log(data);
+    //   redirect("/");
+    // }
 
-    if (!data) {
-      toast.error("সাইন আপ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-    }
+    // if (!data) {
+    //   toast.error("সাইন আপ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    // }
   };
 
   const handleGithubSignIn = async () => {
-    const data = await authClient.signIn.social({ provider: "github" });
-    if (data) {
-      toast.success("সাইন আপ সফল হয়েছে! মূলপাতায় নিয়ে যাওয়া হচ্ছে...");
-      console.log(data);
-      redirect("/");
-    }
+    await authClient.signIn.social({ provider: "github" });
+    // if (data) {
+    //   toast.success("সাইন আপ সফল হয়েছে! মূলপাতায় নিয়ে যাওয়া হচ্ছে...");
+    //   console.log(data);
+    //   redirect("/");
+    // }
 
-    if (!data) {
-      toast.error("সাইন আপ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-    }
+    // if (!data) {
+    //   toast.error("সাইন আপ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    // }
   };
 
   return (
