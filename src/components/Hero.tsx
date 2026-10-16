@@ -35,7 +35,7 @@ export default async function Hero() {
 
               <div className="mt-6">
                 <Link
-                  href="/products"
+                  href="#all-products"
                   className="inline-block rounded-lg bg-[#008236] px-6 py-2.5 text-sm font-medium text-white shadow-md hover:bg-[#006d2d] transition-all"
                 >
                   সব পণ্য দেখুন

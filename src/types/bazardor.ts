@@ -63,14 +63,14 @@ export interface ISingleProduct {
     pct: number;
     text?: string;
   };
-  minPrice?: {
-    price: number;
-    market: string;
-  };
-  maxPrice?: {
-    price: number;
-    market: string;
-  };
-  avgPrice?: number;
+  // minPrice?: {
+  //   price: number;
+  //   market: string;
+  // };
+  // maxPrice?: {
+  //   price: number;
+  //   market: string;
+  // };
+  // avgPrice?: number;
   markets?: IMarketPrice[];
 }

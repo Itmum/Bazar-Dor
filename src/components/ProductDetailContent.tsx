@@ -1,4 +1,4 @@
-import { toBengaliNumber } from "@/lib/utils";
+import { formatUnitBn, toBengaliNumber } from "@/lib/utils";
 import { ISingleProduct } from "@/types/bazardor";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -17,9 +17,23 @@ async function getSingleProduct(id: string): Promise<ISingleProduct | null> {
 
   return await res.json();
 }
+
 const ProductDetailContent = async ({ params }: ProductDetailContentProps) => {
   const { id } = await params;
   const product = await getSingleProduct(id);
+
+  const maxPrice = Math.max(...(product?.markets?.map((i) => i.max) ?? []));
+  const minPrice = Math.min(...(product?.markets?.map((i) => i.min) ?? []));
+  const avgPriceList: number[] =
+    product?.markets?.map((i) => {
+      const min = i.min;
+      const max = i.max;
+      const avg = (min + max) / 2;
+      return avg;
+    }) ?? [];
+  const avgPrice = avgPriceList.length
+    ? avgPriceList.reduce((sum, price) => sum + price, 0) / avgPriceList.length
+    : 0;
 
   if (!product) {
     notFound();
@@ -52,7 +66,7 @@ const ProductDetailContent = async ({ params }: ProductDetailContentProps) => {
             <p className="text-xs text-gray-400 mt-0.5">
               গতকালের তুলনায় আজ দাম{" "}
               {product.change?.dir === "up" ? "বেড়েছে" : "কমেছে"} ·{" "}
-              {product.change?.amt || 0} টাকা
+              {product.change?.pct || 0} %
             </p>
           </div>
         </div>
@@ -80,10 +94,10 @@ const ProductDetailContent = async ({ params }: ProductDetailContentProps) => {
           <div className="rounded-3xl bg-white p-5 shadow-sm border border-gray-100">
             <p className="text-xs text-gray-500">সর্বনিম্ন দাম</p>
             <p className="text-xl font-bold text-green-600 mt-1">
-              {product.minPrice?.price || 0} টাকা
+              {toBengaliNumber(minPrice) || toBengaliNumber(0)} টাকা
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              {product.minPrice?.market || "সবচেয়ে কম দামের বাজার"}
+              {"সবচেয়ে কম দামের বাজার"}
             </p>
           </div>
 
@@ -91,10 +105,10 @@ const ProductDetailContent = async ({ params }: ProductDetailContentProps) => {
           <div className="rounded-3xl bg-white p-5 shadow-sm border border-gray-100">
             <p className="text-xs text-gray-500">সর্বাধিক দাম</p>
             <p className="text-xl font-bold text-red-500 mt-1">
-              {product.maxPrice?.price || 0} টাকা
+              {toBengaliNumber(maxPrice) || toBengaliNumber(0)} টাকা
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              {product.maxPrice?.market || "সবচেয়ে বেশি দামের বাজার"}
+              {"সবচেয়ে বেশি দামের বাজার"}
             </p>
           </div>
 
@@ -102,9 +116,11 @@ const ProductDetailContent = async ({ params }: ProductDetailContentProps) => {
           <div className="rounded-3xl bg-white p-5 shadow-sm border border-gray-100">
             <p className="text-xs text-gray-500">গড় দাম</p>
             <p className="text-xl font-bold text-gray-900 mt-1">
-              {product.avgPrice || product.today} টাকা
+              {toBengaliNumber(avgPrice.toFixed(2))} টাকা
             </p>
-            <p className="text-xs text-gray-400 mt-1">প্রতি কেজি-এর হিসাবে</p>
+            <p className="text-xs text-gray-400 mt-1">
+              প্রতি {formatUnitBn(product.unit)}-এর হিসাবে
+            </p>
           </div>
         </div>
       </div>
@@ -123,6 +139,7 @@ const ProductDetailContent = async ({ params }: ProductDetailContentProps) => {
                 <th className="py-3 px-4 font-medium">বিভাগ</th>
                 <th className="py-3 px-4 font-medium">সর্বনিম্ন</th>
                 <th className="py-3 px-4 font-medium">সর্বাধিক</th>
+                <th className="py-3 px-4 font-medium">গড়</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -137,6 +154,9 @@ const ProductDetailContent = async ({ params }: ProductDetailContentProps) => {
                   </td>
                   <td className="py-3 px-4 text-gray-900">
                     {toBengaliNumber(m.max)} টাকা
+                  </td>
+                  <td className="py-3 px-4 text-gray-900">
+                    {toBengaliNumber((m.max + m.min) / 2)} টাকা
                   </td>
                 </tr>
               ))}

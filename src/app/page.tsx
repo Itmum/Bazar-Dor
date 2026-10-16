@@ -25,7 +25,9 @@ export default async function Home() {
         <Hero></Hero>
         <TodayIncreasedProducts products={products} />
         <TodayDecreasedProduct products={products} />
-        <AllProducts products={products} />
+        <div id="all-products" className="scroll-mt-8">
+          <AllProducts products={products} />
+        </div>
       </div>
     </main>
   );

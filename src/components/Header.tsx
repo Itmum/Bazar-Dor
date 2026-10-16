@@ -16,7 +16,7 @@ export default async function Header() {
   const date = await getCachedDate();
 
   return (
-    <header className="border-b border-gray-200 bg-white py-3 shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white py-3 shadow-sm">
       <div className="container mx-auto flex flex-row items-center justify-between px-4">
         {/* Left Side: Logo and Branding */}
         <div className="flex items-center gap-3">
